@@ -25,7 +25,6 @@ function startGame() {
 	3. we want to add those underscores to the HTML
 	4. numgusses always equals9, and blankandsuccess is an empty array,
 	and wronggusses is an empty as well
-
 	*/
 
 	console.log('startGame called');
@@ -37,17 +36,17 @@ function startGame() {
 
 
 	chosenWord = wordList[Math.floor(Math.random() * wordList.length)];
-	letterInChosenWord = chosenWord.split();
+	letterInChosenWord = chosenWord.split(""); // ["word"]  ["w", "o"]
 	numBlanks = letterInChosenWord.length;
 	console.log(chosenWord);
-	console.log(numBlanks);
+	//console.log(numBlanks);
+	chosenWord = letterInChosenWord;
 
 
 	/*for (var i = 0; i < chosenWord.length; i++) {
 		var elem = document.getElementById("word-blank");
 		elem.innerHTML = elem.innerHTML + " _ ";
 	}
-
 	// letterInChosenWord = chosenWord.split(" ");
 	numBlanks = letterInChosenWord.length;
 	console.log(chosenWord);
@@ -72,25 +71,25 @@ function checkLetters(letters) {
 	2. I want s conditional statement to determine if the letter the user picked
 	is in the word. If no, do something, if not, do something else
 	3. if the user is wrong we want to decrease the numGuesses variables by one
-
 	*/
 	var lettterInWord = false;
-
-	for (var i = 0; i < numBlanks; i++) {
-		if(chosenWord[i] === letter) {
+	for (var i = 0; i < chosenWord.length; i++) {
+	
+		if(chosenWord[i] === letters) {
+			//console.log(chosenWord[i]);
 			lettterInWord = true;
 		}
 	}
 
 	if (lettterInWord) {
 		for (i = 0; i < numBlanks; i++) {
-			if (chosenWord[i] === letter) {
-				blanksAndSuccesses[i] = letter;
+			if (chosenWord[i] === letters) {
+				blanksAndSuccesses[i] = letters;
 			}
 		}
 	} else {
 		numGuesses --;
-		wrongGuesses.push(letter);
+		wrongGuesses.push(letters);
 	}
 
 		/*
@@ -107,12 +106,10 @@ function checkLetters(letters) {
 function roundComplete(){
 
 	/*
-
 	1. it's going to update the HTML with letters that are in the word
 	2. it's going to update the HTML with gusses we have left
 	3. It's gonig to update the HTML to show the wrong gusses
 	4. It's going to determine wether the user won the game or not
-
 	*/
 	// document.getElementById("word-blank").innerHTML = blanksAndSuccesses;
 	document.getElementById("word-blank").innerHTML = blanksAndSuccesses.join(" ");
@@ -123,8 +120,8 @@ function roundComplete(){
 	//blanksAndSuccesses.indexOf(letter >=0)){
 		//console.log(letter)
 	//}
-	console.log(letterInChosenWord);
-	console.log(blanksAndSuccesses);
+	//console.log(letterInChosenWord);
+	//console.log(blanksAndSuccesses);
 	if (letterInChosenWord.join(" ") === blanksAndSuccesses.join(" ")) {
 		winCounter++;
 		alert("You Win!!");
@@ -132,6 +129,7 @@ function roundComplete(){
 	} else if(numGuesses === 0) {
 		document.getElementById("loss-counter").innerHTML = lossCounter ++;
 		alert("You don't have any more guesses");
+		alert("Keep Playing");
 
 		startGame();
 	}
@@ -148,7 +146,7 @@ document.onkeyup = function(event){
 	2. it's going to pass it through the check letter function
 	*/
 	var letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
-	console.log("this is the letter we typed" + letterGuessed);
+	//console.log("this is the letter we typed " + letterGuessed);
 	checkLetters(letterGuessed);
 	roundComplete();
 };
